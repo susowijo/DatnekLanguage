@@ -1,13 +1,13 @@
 
 <hr>
 <div class="container">
-  <ul class="nav nav-pills">
-    <li *ngFor="let lang of langs; let i = index" class="nav-item mr-2" (click)="switchLang(lang.Name, i)">
-      <a  class="btn nav-link {{activeLang[i] ? 'active' : 'btn-outline-info'}}">{{lang.Name | translate}}</a>
+  <ul class="nav nav-pills row">
+    <li *ngFor="let lang of langs; let i = index" class="nav-item mr-2" (click)="switchLang(lang.name, i)">
+      <a  class="btn nav-link {{activeLang[i] ? 'active' : 'btn-outline-info'}}">{{lang.name | translate}}</a>
     </li>
-    <li class="nav-item float-right ">
-      <a class="btn nav-link {{modalText == '_modal_closed' ? 'btn-secondary' : 'btn-success'}} text-white" rel="noopener">
-        <span>{{modalText| translate}}</span>
+    <li class="nav-item float-right justify-content-end offset-md-6 col">
+      <a class="btn nav-link {{!isOpen ? 'btn-secondary' : 'btn-success'}} text-white" rel="noopener">
+        <span>{{!isOpen ? ('_modal_closed' | translate) : ('_modal_opened' | translate)}}</span>
       </a>
     </li>
   </ul>
@@ -18,20 +18,20 @@
     <div class="col-md-9 col-sm-12">
       <div class="card ">
         <div class="card-header">
-          <h5 class="card-title">{{'_add_language' | translate}}</h5>
+          <h5 class="card-title">{{onCreate ? ('_add_language' | translate) : ('_edit_language' | translate)}}</h5>
         </div>
-        <form #f="ngForm">
+        <form #f="ngForm" (ngSubmit)="onSubmit()">
             <div class="modal-body row">
               <div class="col-md-6 col-sm-12">
                 <label>{{'_select_lang' | translate}} *</label>
-                <select required name="lang" [(ngModel)]="userLang.LanguageID" class="form-control show-tick">
+                <select required name="lang" [(ngModel)]="userLang.languageID" class="form-control show-tick">
                   <option value="0">{{'_select_element' | translate}}</option>
-                  <option *ngFor="let lang of langs" value="{{lang.ID}}">{{lang.Name | translate}}</option>
+                  <option *ngFor="let lang of langs" value="{{lang.id}}">{{lang.name | translate}}</option>
                 </select>
               </div>
               <div class="col-md-6 col-sm-12">
                 <label>{{'_level_speaks' | translate}} *</label>
-                <select required name="speak" [(ngModel)]="userLang.LevelSpeacks" class="form-control show-tick">
+                <select required name="speak" [(ngModel)]="userLang.levelSpeacks" class="form-control show-tick">
                   <option value="">{{'_select_element' | translate}}</option>
                   <option value="_elementary">{{'_elementary' | translate}}</option>
                   <option value="_pre_intermediate">{{'_pre_intermediate' | translate}}</option>
@@ -42,7 +42,7 @@
               </div>
               <div class="col-md-6 col-sm-12">
                 <label>{{'_written_level' | translate}} *</label>
-                <select required name="writt" [(ngModel)]="userLang.WrittenLevel" class="form-control show-tick">
+                <select required name="writt" [(ngModel)]="userLang.writtenLevel" class="form-control show-tick">
                   <option value="">{{'_select_element' | translate}}</option>
                   <option value="_elementary">{{'_elementary' | translate}}</option>
                   <option value="_pre_intermediate">{{'_pre_intermediate' | translate}}</option>
@@ -53,7 +53,7 @@
               </div>
               <div class="col-md-6 col-sm-12">
                 <label>{{'_comp_level' | translate}} *</label>
-                <select required name="comp" [(ngModel)]="userLang.CompLevel" class="form-control show-tick">
+                <select required name="comp" [(ngModel)]="userLang.compLevel" class="form-control show-tick">
                   <option  value="">{{'_select_element' | translate}}</option>
                   <option value="_elementary">{{'_elementary' | translate}}</option>
                   <option value="_pre_intermediate">{{'_pre_intermediate' | translate}}</option>
@@ -64,8 +64,11 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button [disabled]="userLang.LevelSpeacks =='' || userLang.WrittenLevel =='' || userLang.CompLevel =='' || userLang.LanguageID ==0" type="submit" class="btn btn-primary">
-                <span>{{'_save' | translate}}</span>
+              <button [disabled]="userLang.levelSpeacks =='' || userLang.writtenLevel =='' || userLang.compLevel =='' || userLang.languageID ==0" type="submit" class="btn btn-primary">
+                <span>{{onCreate ? ('_save' | translate) : ('_edit' | translate)}}</span>
+              </button>
+              <button class="btn btn-info" *ngIf="!onCreate" (click)="cancelUpdate()">
+                <span>{{'_cancel' | translate}}</span>
               </button>
             </div>
           </form>
@@ -89,20 +92,20 @@
           <div class="table-responsive">
             <table class="table table-hover table-vcenter mb-0 table_custom spacing8 text-nowrap">
               <tbody>
-              <tr *ngFor="let userLang of userLangs">
-                <td><strong>{{userLang.Language.Name | translate}}</strong></td>
-                <td><strong>{{'_level_speaks' | translate}}</strong>: {{userLang.LevelSpeacks | translate}}</td>
-                <td><strong>{{'_written_level' | translate}}</strong>: {{userLang.WrittenLevel | translate}}</td>
-                <td><strong>{{'_comp_level' | translate}}</strong>: {{userLang.CompLevel | translate}}</td>
+              <tr *ngFor="let userLang of userLangs; let i = index">
+                <td><strong>{{userLang.language.name | translate}}</strong></td>
+                <td><strong>{{'_level_speaks' | translate}}</strong>: {{userLang.levelSpeacks | translate}}</td>
+                <td><strong>{{'_written_level' | translate}}</strong>: {{userLang.writtenLevel | translate}}</td>
+                <td><strong>{{'_comp_level' | translate}}</strong>: {{userLang.compLevel | translate}}</td>
                 <td class="d-flex">
                   <div class="d-flex justify-content-between">
-                    <button class="btn-sm btn-success">
+                    <button (click)="goToEdit(userLang)" class="btn-sm btn-success">
                       <span>{{'_edit' | translate}}</span>
                     </button>
-                    <button class=" btn-sm btn-secondary" (click)="open(detailmodal)">
+                    <button class=" btn-sm btn-secondary" (click)="open(detailmodal, i)">
                       <span>{{'_detail' | translate}}</span>
                     </button>
-                    <button class="btn-sm btn-danger">
+                    <button (click)="onDeleteUserLanguage(userLang.id)" class="btn-sm btn-danger">
                       <span>{{'_delete' | translate}}</span>
                     </button>
                   </div>
@@ -127,10 +130,10 @@
     </button>
   </div>
   <div class="modal-body">
-    <h5>{{userLang.Language.Name | translate}}</h5>
-    <strong>{{'_level_speaks' | translate}}</strong>: {{userLang.LevelSpeacks | translate}} <br>
-    <strong>{{'_written_level' | translate}}</strong>: {{userLang.WrittenLevel | translate}} <br>
-    <strong>{{'_comp_level' | translate}}</strong>: {{userLang.CompLevel | translate}}
+    <h5>{{userLangDetail.language.name | translate}}</h5>
+    <strong>{{'_level_speaks' | translate}}</strong>: {{userLangDetail.levelSpeacks | translate}} <br>
+    <strong>{{'_written_level' | translate}}</strong>: {{userLangDetail.writtenLevel | translate}} <br>
+    <strong>{{'_comp_level' | translate}}</strong>: {{userLangDetail.compLevel | translate}}
   </div>
 </ng-template>
 

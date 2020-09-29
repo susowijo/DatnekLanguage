@@ -7,10 +7,10 @@
   "_add_language": "Add language",
   "_select_element": "Select an element",
   "_select_lang": "Select a language",
-  "_written_level": "written level",
+  "_written_level": "Written level",
   "_level_speaks": "Level speacks",
   "_comp_level": "Comprehension level",
-  "_lang_number": "number of languages",
+  "_lang_number": "Number of languages",
   "_save": "Save",
   "_lang_list": "List of languages",
   "_detail": "Detail",
@@ -20,5 +20,7 @@
   "_fluent": "Fluent",
   "_high": "High",
   "_edit": "Edit",
-  "_delete": "Delete"
+  "_delete": "Delete",
+  "_cancel": "Cancel",
+  "_edit_language": "Edit language"
 }

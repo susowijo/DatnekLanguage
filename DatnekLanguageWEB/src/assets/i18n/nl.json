@@ -7,10 +7,10 @@
   "_add_language": "Taal toevoegen",
   "_select_element": "Selecteer een element",
   "_select_lang": "Selecteer een taal",
-  "_written_level": "geschreven niveau",
+  "_written_level": "Geschreven niveau",
   "_level_speaks": "Level speacks",
   "_comp_level": "Begrijpend niveau",
-  "_lang_number": "aantal talen",
+  "_lang_number": "Aantal talen",
   "_save": "Opslaan",
   "_lang_list": "Lijst met talen",
   "_detail": "Detail",
@@ -18,7 +18,9 @@
   "_intermediate": "Intermediate",
   "_pre_intermediate": "Pre-intermediate",
   "_fluent": "Vloeiend",
-  "_high" : "hoog",
+  "_high" : "Hoog",
   "_edit": "Bewerken",
-  "_delete": "Verwijderen"
+  "_delete": "Verwijderen",
+  "_cancel": "Annuleren",
+  "_edit_language": "Bewerk taal"
 }

@@ -1,11 +1,11 @@
 import {Language} from './language';
 
 export interface UserLanguage {
-  ID: number;
-  LanguageID: number;
-  UserID: number;
-  LevelSpeacks: string;
-  WrittenLevel: string;
-  CompLevel: string;
-  Language: Language;
+  id: number;
+  languageID: number;
+  userID: number;
+  levelSpeacks: string;
+  writtenLevel: string;
+  compLevel: string;
+  language: Language;
 }
