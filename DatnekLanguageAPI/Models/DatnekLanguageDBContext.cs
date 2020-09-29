@@ -1,18 +1,22 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace DatnekLanguageAPI.Models
 {
     public partial class DatnekLanguageDBContext : DbContext
     {
+        private readonly IConfiguration Configuration;
         public DatnekLanguageDBContext()
         {
+            
         }
 
-        public DatnekLanguageDBContext(DbContextOptions<DatnekLanguageDBContext> options)
+        public DatnekLanguageDBContext(DbContextOptions<DatnekLanguageDBContext> options, IConfiguration configuration)
             : base(options)
         {
+            Configuration = configuration;
         }
 
         public virtual DbSet<Language> Language { get; set; }
@@ -23,7 +27,7 @@ namespace DatnekLanguageAPI.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-R1JNOQE\\SQLEXPRESS;Database=DatnekLanguageDB;User=sa;Password=susOwijO;");
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DatnekLangDB"));
             }
         }
 
